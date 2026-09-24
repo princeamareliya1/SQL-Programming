@@ -21,7 +21,7 @@ exec Pr_Depart 'it'
  where JOININGYEAR=@joining_year
  end
  exec pr_join 2024
-
+--Page 23 of 26 
 --3. Create a stored procedure for dynamic employee search using parameters (User may enter partial city 
 --name). 
 create  or alter proc pr_dynamic
@@ -173,12 +173,3 @@ END
 EXEC PR_PRICERANGE 200, 500
 
 --15. Create a stored procedure that accepts an author ID and deletes all books written by that author.
-CREATE OR ALTER PROC PR_DELETEBOOK
-@AUTHORID INT
-AS
-BEGIN
-    DELETE FROM BOOK
-    WHERE AUTHORID = @AUTHORID
-END
-
-EXEC PR_DELETEBOOK 3
