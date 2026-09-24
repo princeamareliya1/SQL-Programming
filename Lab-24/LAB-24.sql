@@ -1,5 +1,4 @@
----- Create a stored procedure to generate department-wise salary statistics like total salary, average 
-----salary, minimum salary, and maximum salary. (User enter only department name) 
+---- Create a stored procedure to generate department-wise salary statistics like total salary, average salary, minimum salary, and maximum salary. (User enter only department name) 
 create or alter proc Pr_Depart
 @DEPARTMENT VARCHAR(30)
 AS
@@ -22,7 +21,7 @@ exec Pr_Depart 'it'
  where JOININGYEAR=@joining_year
  end
  exec pr_join 2024
---Page 23 of 26 
+
 --3. Create a stored procedure for dynamic employee search using parameters (User may enter partial city 
 --name). 
 create  or alter proc pr_dynamic
@@ -96,7 +95,7 @@ WITH CTE  AS(
 end
 EXEC pr_year 3
 --From the table AUTHOR, PUBLISHER and BOOK perform the following queries:  
---Part – B:  
+--Part ï¿½ B:  
 --9. Create a stored procedure that accepts an author name and displays all books written by that author. 
 CREATE OR ALTER PROC PR_DISP
 @AUTHER VARCHAR(40)
@@ -143,10 +142,43 @@ WITH CTE  AS(
 	SELECT * FROM CTE
 	WHERE RK<=@N
 end
---Part – C:  
+--Part ï¿½ C:  
 --13. Create a stored procedure that accepts a publisher name and displays the total number of books 
 --published by that publisher. 
+CREATE OR ALTER PROC PR_COUNTBOOK
+@PUBLISHERNAME VARCHAR(40)
+AS
+BEGIN
+    SELECT P.PUBLISHERNAME, COUNT(*) AS TOTAL_BOOKS
+    FROM BOOK B
+    JOIN PUBLISHER P
+        ON B.PUBLISHERID = P.PUBLISHERID
+    WHERE P.PUBLISHERNAME = @PUBLISHERNAME
+    GROUP BY P.PUBLISHERNAME
+END
+
+EXEC PR_COUNTBOOK 'PENGUIN'
 --14. Create a stored procedure that accepts a price range (Min Price Max Price) and displays books whose 
 --prices fall within that range. 
+CREATE OR ALTER PROC PR_PRICERANGE
+@MINPRICE INT,
+@MAXPRICE INT
+AS
+BEGIN
+    SELECT *
+    FROM BOOK
+    WHERE PRICE BETWEEN @MINPRICE AND @MAXPRICE
+END
+
+EXEC PR_PRICERANGE 200, 500
 
 --15. Create a stored procedure that accepts an author ID and deletes all books written by that author.
+CREATE OR ALTER PROC PR_DELETEBOOK
+@AUTHORID INT
+AS
+BEGIN
+    DELETE FROM BOOK
+    WHERE AUTHORID = @AUTHORID
+END
+
+EXEC PR_DELETEBOOK 3
